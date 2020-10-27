@@ -1,0 +1,247 @@
+html,
+body {
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;    
+    overflow: hidden;
+    --mp-primary: #d51b1b;
+    --bg-peach: #fbd7c2;
+    --bg-gray: #fafafa;
+}
+
+main {
+    position: absolute;
+    padding: 2rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.scene {
+    height: 100%;
+    width: 100%;
+    perspective: 3000px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #fbd7c2;    
+    background-image: linear-gradient(120deg, var(--bg-gray) 40%, var(--bg-peach) calc(40% + 2px));
+}
+
+.scene * {
+    transform-style: preserve-3d;
+}
+
+.cake {
+    position: absolute;
+}
+
+.cake__slice {
+    --length: 300px;
+    --height: 300px;
+    --angle: 30deg;
+    height: var(--height);
+    width: var(--length);
+    transform-origin: 0 50%;
+    position: absolute;
+    transition: transform 0.5s ease-in-out;
+}
+
+.cake__slice__side {
+    width: var(--length);
+    height: var(--height);
+    position: absolute;
+    transform-origin: left;
+
+    background: url(content/cake-cut.png);
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+.cake__slice__side:nth-of-type(1) {
+    transform: rotateX(-90deg) rotateY(calc(var(--angle) / 2));
+    filter: brightness(1.02);
+}
+
+.cake__slice__side:nth-of-type(2) {
+    transform: rotateX(-90deg) rotateY(calc(-1 * var(--angle) / 2));
+    filter: brightness(85%);
+}
+
+.cake__slice__top {
+    width: 100%;
+    transform: translate3d(0%, -50%, calc(var(--height) / 2));
+    transform-origin: 0 50%;
+    top: 50%;
+    fill: rgb(255 248 225);
+    position: absolute;
+}
+
+.cake__slice__behind {
+    height: var(--height);
+    width: 156px;
+    transform: translateX(-50%) rotateX(-90deg) rotateY(90deg) translateZ(290px);
+    transform-origin: 50% 50%;
+    position: absolute;
+    background-color: rgb(243, 237, 216);
+}
+
+[data-model] {
+    display: none;
+}
+
+.plate {
+    width: 800px;
+    height: 800px;
+    transform: translate(-50%, -50%) rotateZ(15deg);
+    position: absolute;
+    transform-origin: 50% 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    transition: transform 0.5s ease-in-out;
+}
+
+.plate.flip {
+    transform: translate(-50%, -50%) rotateZ(15deg) rotateZ(45deg) rotateY(180deg);
+}
+
+.plate__top {
+    fill: #fff;
+    /* stroke: #eaeaea; */
+    position: absolute;
+}
+
+.plate__logo {
+    width: 80%;
+    position: absolute;
+    z-index: 1;
+    fill: var(--mp-primary);
+    transform: translateZ(0.1px);
+}
+
+.plate__crumbs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    transform: translateZ(0.1px);
+}
+
+.plate__note {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 6px 2px #0000002e;
+    background-color: #fcffbd;
+    transform: translateZ(-0.1px) translateX(-200px) rotateY(180deg) rotateZ(-53deg);
+}
+
+.plane {
+    display: none;
+    position: absolute;
+    transform-origin: 50% 50%;
+    animation: cake__spin-in 3s;
+    transition: transform 0.5s ease-in-out;
+}
+
+.plane.spin-in {
+    display: block;
+    transform: rotateX(-24deg) rotateY(0deg) rotateX(90deg) translateZ(-150px);
+}
+
+.plane.finished {
+    transform: rotateZ(-15deg);
+    /* animation: cake__center-in 2s; */
+}
+
+.cake__slice__shadow {
+    fill: rgb(0, 0, 0, 0.5);
+    position: absolute;
+    transform-origin: 0 50%;
+    top: 50%;
+    transition: all 0.5s ease-in-out;
+}
+
+.cake__slice__shadow.hover {
+    fill: rgba(0, 0, 0, 0.2);
+}
+
+.cake__slice__shadow.spin-out {
+    fill: rgba(0, 0, 0, 0);
+}
+
+@keyframes cake__spin-in {
+    0% {
+        transform: rotateX(-24deg) rotateY(-300deg) rotateX(90deg) translateZ(800px);
+    }
+
+    100% {
+        transform: rotateX(-24deg) rotateY(0deg) rotateX(90deg) translateZ(-150px);
+    }
+}
+
+@keyframes cake__center-in {
+    0% {
+        transform: rotateX(-24deg) rotateY(0deg) rotateX(90deg) translateZ(-150px);
+    }
+
+    100% {
+        transform: rotateZ(-15deg);
+    }
+}
+
+@keyframes cake__slice__spin-out {
+    0% {
+        transform: rotateX(-24deg) rotateY(-300deg) rotateX(90deg) translateZ(800px);
+    }
+
+    100% {
+        transform: translateY(-50%) translateZ(300px) rotateZ(90deg) translateX(800px);
+    }
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.title__text, .title__logo {
+    display: inline-block;
+    white-space: nowrap;
+    color: var(--mp-primary);
+    font-weight: 400;
+    margin: 0;
+}
+
+.title__logo {
+    margin-bottom: -0.5rem;
+    margin-right: 0.5rem;
+}
+
+.credits {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 1rem 2rem;
+    color: #e4b69a;
+}
+
+.title__leading {
+    margin-top: 1rem;
+    font-size: 5rem;
+    color: var(--mp-primary);
+    font-weight: bold;
+}
+
+.card {
+    padding: 2rem;
+    background-color: var(--bg-gray);
+}
