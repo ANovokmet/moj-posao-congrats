@@ -9,6 +9,9 @@ body {
     --mp-primary: #d51b1b;
     --bg-peach: #fbd7c2;
     --bg-gray: #fafafa;
+
+    background: #fbd7c2;    
+    background-image: linear-gradient(120deg, var(--bg-gray) 40%, var(--bg-peach) calc(40% + 2px));
 }
 
 main {
@@ -26,9 +29,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: #fbd7c2;    
-    background-image: linear-gradient(120deg, var(--bg-gray) 40%, var(--bg-peach) calc(40% + 2px));
 }
 
 .scene * {
@@ -244,4 +244,74 @@ main {
 .card {
     padding: 2rem;
     background-color: var(--bg-gray);
+}
+
+.bday-card {
+    --height: 200px;
+    --width: 150px;
+    height: var(--height);
+    width: var(--width);
+    position: absolute;
+    transform: translateX(-600px) rotateZ(0deg);
+}
+
+.bday-card__page, .bday-card__page__front {
+    position: absolute;
+    height: var(--height);
+    width: var(--width);
+    transform-origin: 0% 50%;
+    pointer-events: all;
+    user-select: none;
+}
+
+.bday-card__page__front {
+    position: absolute;
+    transform: rotateY(-15deg);
+    transition: transform 1s ease-in-out;
+}
+
+.bday-card:hover .bday-card__page__front {
+    transform: rotateY(-120deg);
+}
+
+.bday-card:hover .bday-card__back {
+    background-color: #ffe1e4;
+}
+
+.bday-card:hover .bday-card__page__front .bday-card__back {
+    background-color: #ffeef0;
+}
+
+.bday-card__image, .bday-card__back, .bday-card__text {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+.bday-card__image, .bday-card__text {
+    transform: translateZ(0.1px);
+}
+
+.bday-card__back {
+    transition: background-color 1s ease-in-out;
+    background-color: #e1aab0;
+}
+
+.bday-card__text {
+    padding: 1rem;
+    font-size: .8rem;
+    box-sizing: border-box; 
+    color: #420b0b;
+    font-weight: 300;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.bday-card__image>img {
+    width: 101%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
